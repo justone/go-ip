@@ -1,1 +1,1 @@
-web: goip
+web: go-ip
