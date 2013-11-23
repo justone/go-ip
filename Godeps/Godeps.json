@@ -1,0 +1,5 @@
+{
+	"ImportPath": "github.com/justone/go-ip",
+	"GoVersion": "go1.1.2",
+	"Deps": []
+}
