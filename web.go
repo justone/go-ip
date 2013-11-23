@@ -9,8 +9,14 @@ import (
 
 func main() {
 	http.HandleFunc("/", printIP)
-	fmt.Println("listening...")
-	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+
+	var port string
+	if port = os.Getenv("PORT"); len(port) == 0 {
+		port = "5000"
+	}
+
+	fmt.Printf("listening on %s...\n", port)
+	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		panic(err)
 	}
