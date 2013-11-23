@@ -24,18 +24,16 @@ func main() {
 
 func printIP(res http.ResponseWriter, req *http.Request) {
 
-	realIP, ok := req.Header["X-Real-Ip"]
-	if ok {
-		fmt.Fprintln(res, cleanUp(realIP[0]))
-		return
+	// try proxy friendly headers
+	for _, header := range []string{"X-Real-Ip", "X-Forwarded-For"} {
+		realIP, ok := req.Header[header]
+		if ok {
+			fmt.Fprintln(res, cleanUp(realIP[0]))
+			return
+		}
 	}
 
-	forwardedFor, ok := req.Header["X-Forwarded-For"]
-	if ok {
-		fmt.Fprintln(res, cleanUp(forwardedFor[0]))
-		return
-	}
-
+	// fall back to the remote address
 	fmt.Fprintln(res, cleanUp(req.RemoteAddr))
 }
 
