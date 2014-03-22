@@ -9,6 +9,7 @@ import (
 
 func main() {
 	http.HandleFunc("/", printIP)
+	http.HandleFunc("/ua", printUA)
 
 	var port string
 	if port = os.Getenv("PORT"); len(port) == 0 {
@@ -20,6 +21,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func printUA(res http.ResponseWriter, req *http.Request) {
+	fmt.Fprintln(res, req.Header["User-Agent"][0])
 }
 
 func printIP(res http.ResponseWriter, req *http.Request) {
